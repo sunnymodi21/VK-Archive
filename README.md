@@ -12,6 +12,8 @@ To start the application,
 
 2. Run,
 
-    ```npm install
+    ```
+    npm install
 
-    npm start```
+    npm start
+    ```
