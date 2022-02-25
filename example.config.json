@@ -1,16 +1,8 @@
 {
     "keywords": [
-        "Ukraine",
+        "war",
         "ukraine",
-        "Russia",
-        "russia",
-        "#UkraineInvasion",
-        "Donetsk",
-        "Luhansk",
-        "Donbas",
-        "Донецьк",
-        "Луганськ",
-        "Донба́с"
+        "russia"
     ],
     "userIDs": [
         "718916004072570880",
@@ -19,7 +11,7 @@
     "instances": 1,
     "query": "ukraine",
     "walletPath": "./wallet.json",
-    "bundlrNode": "https://node1.bundlr.network",
+    "bundlrNode": "https://node2.bundlr.network",
     "difference": 0.02,
     "refreshPeriod": "-4 hours"
 }
