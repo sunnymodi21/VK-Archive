@@ -8,4 +8,3 @@ ARchiver.db
 ARchiver.db-shm
 ARchiver.db-wal
 .env
-config.json
