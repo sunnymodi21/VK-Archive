@@ -10,14 +10,19 @@ const vkflow = require("vkflow")
 
 let TPM = 0;
 let pTPM = 0
+let bundlr
+
 setInterval(() => {
-    console.log(`TPM: ${TPM} - pTPM: ${pTPM}`); TPM = 0; pTPM = 0
+   console.log(`TPM: ${TPM} - pTPM: ${pTPM}`); TPM = 0; pTPM = 0
 }, 60000)
+
+setInterval(() => {
+  console.log(`Checking and funding bundlr balance`);
+}, 3600000)
 
 const checkPath = async (path: PathLike): Promise<boolean> => { return promises.stat(path).then(_ => true).catch(_ => false) }
 
 let vkStream
-let bundlr
 
 async function main() {
 
@@ -37,12 +42,12 @@ async function main() {
       keys.vkKeys.service_key,
       vkFilters
     );
-    bundlr = new Bundlr(config.bundlrNode, "arweave", keys.arweave)
+    bundlr = new Bundlr(config.bundlrNode, "arweave", keys.arweave);
 
     console.log(`Loaded with account address: ${bundlr.address}`);
     //await processTweet(tweet)
-    const balance = await bundlr.getLoadedBalance();
-    console.log(`Bundlr balance for account: ${balance}`);
+
+    checkAndFundBUndlr(bundlr);
     vkStream.on('data', processVKData);
 
     vkStream.on('error', (e) => {
@@ -51,6 +56,17 @@ async function main() {
     const trackKeyWords = config.keywords
     console.log(`Tracking key words: ${trackKeyWords}`);
 
+}
+
+async function checkAndFundBundlr(bundlr) {
+  const balance = await bundlr.getLoadedBalance();
+  console.log(`Bundlr balance for account: ${balance}`);
+  if (balance < 5e11) {
+    console.log("bundlr balance low, funding now");
+    // fund 1 AR
+    const fundingId = await bundlr.fund(1e12);
+    console.log("funded 1 AR with fundingID ", fundingId);
+  }
 }
 
 async function processVKData(data) {
@@ -121,11 +137,6 @@ async function processVKData(data) {
 
           await processMediaURL(photoUrl, mediaDir, i);
         }
-        if (type === "link") {
-          const link = attachment.link;
-          tags.push({ name: "Attachment", value: "Link"})
-          console.log(link);
-        }
       }
     }
 
@@ -135,7 +146,7 @@ async function processVKData(data) {
         const mres = await bundlr.uploader.uploadFolder(tmpdir.path, null, 10, false, async (_) => { })
         if (mres != "none" && mres != undefined) {
             tags.push({ name: "Media-Manifest-ID", value: `${mres}` })
-            console.log(`https://node1.bundlr.network/tx/${mres}/data`)
+            console.log(`https://node2.bundlr.network/tx/${mres}/data`)
         }
 
         // clean up manifest and ID file.
@@ -164,7 +175,6 @@ async function processVKData(data) {
       }
   }
 }
-
 
 
 
