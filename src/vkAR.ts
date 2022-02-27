@@ -18,6 +18,7 @@ setInterval(() => {
 
 setInterval(() => {
   console.log(`Checking and funding bundlr balance`);
+  checkAndFundBundlr(bundlr)
 }, 3600000)
 
 const checkPath = async (path: PathLike): Promise<boolean> => { return promises.stat(path).then(_ => true).catch(_ => false) }
@@ -47,7 +48,7 @@ async function main() {
     console.log(`Loaded with account address: ${bundlr.address}`);
     //await processTweet(tweet)
 
-    checkAndFundBUndlr(bundlr);
+    await checkAndFundBundlr(bundlr);
     vkStream.on('data', processVKData);
 
     vkStream.on('error', (e) => {
