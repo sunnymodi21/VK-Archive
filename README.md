@@ -16,7 +16,7 @@ ARWEAVE_KEY - Arweave wallet key
 
 To start the application,
 
-2. Run,
+Run,
 
     ```
     npm install
