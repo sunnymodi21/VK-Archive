@@ -5,11 +5,15 @@ This repository is a fork from https://github.com/Bundlr-Network/ARchivers - and
 To run vkAR, you need an Arweave wallet - more specifically an Arweave wallet file (json).
 You need to copy the contents of this wallet file into the file wallet.json's "arweave" section (example provided in example.wallet.json).
 
-You also need API Service Key from https://dev.vk.com/ - this service_key must be placed inside wallet.json under the "vkKeys" section.
+You also need API Service Key from https://dev.vk.com/
+
+To set up the application,
+Set the Environment Variables as follows:
+
+VK_SERVICE_KEY - The VK Service Key
+ARWEAVE_KEY - Arweave wallet key
 
 To start the application,
-
-1. Add to wallet.json your arweave wallet details under "arweave" and VK service keys under "vkKeys.service_key"
 
 2. Run,
 

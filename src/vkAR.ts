@@ -28,7 +28,6 @@ let vkStream
 async function main() {
 
     const config = JSON.parse(readFileSync("config.json").toString());
-    const keys = JSON.parse(readFileSync(config.walletPath).toString());
 
     const vkFilters = config.keywords.map((word, index)=>{
       return {
@@ -39,11 +38,22 @@ async function main() {
 
     console.log(vkFilters);
 
+
+    if(!process.env.VK_SERVICE_KEY) {
+        throw 'Please provide VK Service Key';
+    }
+    if(!process.env.ARWEAVE_KEY){
+        throw 'Please provide ARWEAVE private key';
+    }
+
+    const ARWEAVE_KEY = JSON.parse(process.env.ARWEAVE_KEY);
+    const VK_SERVICE_KEY = process.env.VK_SERVICE_KEY;
+
     vkStream = vkflow(
-      keys.vkKeys.service_key,
-      vkFilters
+        VK_SERVICE_KEY,
+        vkFilters
     );
-    bundlr = new Bundlr(config.bundlrNode, "arweave", keys.arweave);
+    bundlr = new Bundlr(config.bundlrNode, "arweave", ARWEAVE_KEY);
 
     console.log(`Loaded with account address: ${bundlr.address}`);
     //await processTweet(tweet)
@@ -177,12 +187,11 @@ async function processVKData(data) {
   }
 }
 
-
-
-
 export async function processMediaURL(url: string, dir: string, i: number) {
     return new Promise(async (resolve, reject) => {
-        const ext = url?.split("/")?.at(-1)?.split(".")?.at(1)?.split("?").at(0) ?? "unknown"
+        const urlItems = url?.split("/");
+        const imageDetails = urlItems ? urlItems[urlItems.length-1]?.split(".") : [];
+        const ext = imageDetails[1]?.split("?")[0] ?? "unknown";
         const wstream = createWriteStream(p.join(dir, `${i}.${ext}`))
         const res = await axios.get(url, {
             responseType: "stream"
