@@ -8,9 +8,11 @@ You also need API Service Key from https://dev.vk.com/. Sign up and create an ap
 
 To set up the Node.js application,
 Set the Environment Variables as follows:
-
+```
 VK_SERVICE_KEY - The VK Service Key
+
 ARWEAVE_KEY - Arweave wallet key
+```
 
 To start the application,
 
