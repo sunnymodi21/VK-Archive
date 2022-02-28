@@ -37,7 +37,6 @@
     ],
     "instances": 1,
     "query": "ukraine",
-    "walletPath": "./wallet.json",
     "bundlrNode": "https://node2.bundlr.network",
     "difference": 0.02,
     "refreshPeriod": "-4 hours"

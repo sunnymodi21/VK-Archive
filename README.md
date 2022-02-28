@@ -2,12 +2,11 @@ This repository is a fork from https://github.com/Bundlr-Network/ARchivers - and
 
 # vkAR - archiver for pulling from V Kontakte and storing permanently to Arweave via Bundlr
 
-To run vkAR, you need an Arweave wallet - more specifically an Arweave wallet file (json).
-You need to copy the contents of this wallet file into the file wallet.json's "arweave" section (example provided in example.wallet.json).
+To run vkAR, you need an Arweave wallet
 
-You also need API Service Key from https://dev.vk.com/
+You also need API Service Key from https://dev.vk.com/. Sign up and create an app. You will find the Service token under Settings of the app
 
-To set up the application,
+To set up the Node.js application,
 Set the Environment Variables as follows:
 
 VK_SERVICE_KEY - The VK Service Key
